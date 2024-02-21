@@ -8,14 +8,14 @@ const JUMP_VELOCITY = -400.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var flag = false
+var is_collision_enemy = false
 
 #func _process(_delta):
 		#return;
 			
 func _physics_process(delta):
 	# Add the gravity.
-	if not is_on_floor():
+	if not is_on_floor() && is_collision_enemy == false:
 		anim.play("Jump");
 		velocity.y += gravity * delta
 
@@ -27,16 +27,17 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
 	if direction:
-		anim.play("Run");
-		anim.scale.x = direction; # flip: lật
-		velocity.x = direction * SPEED
+		if is_collision_enemy == false:
+			anim.play("Run");
+			anim.scale.x = direction; # flip: lật
+			velocity.x = direction * SPEED
 	else:
-		anim.play("Idle");
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		if is_collision_enemy == false:
+			anim.play("Idle");
+			velocity.x = move_toward(velocity.x, 0, SPEED)
 	
-	if flag:
+	if is_collision_enemy:
 		anim.play("Death")
-		flag = false
 		death()
 		return
 		
@@ -51,7 +52,7 @@ func death():
 # Handle collision enemy	
 func _on_area_2d_body_entered(body):
 	if body.name == "Bee":
-		flag = true
+		is_collision_enemy = true
 	pass # Replace with function body.
 
 func reload():
