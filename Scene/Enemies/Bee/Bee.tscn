@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://baihb163nsuqd"]
+[gd_scene load_steps=13 format=3 uid="uid://baihb163nsuqd"]
 
 [ext_resource type="Script" path="res://Script/Enemies/Bee/Bee.gd" id="1_7s8vu"]
 [ext_resource type="Texture2D" uid="uid://dptqmxc83y6ho" path="res://Asset/Sunny-land-forest-files/PNG/sprites/enemies/bee/bee-1.png" id="1_unmuv"]
@@ -44,9 +44,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_kysft"]
-radius = 18.2483
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_u4b3o"]
 radius = 79.0569
 
@@ -61,16 +58,10 @@ sprite_frames = SubResource("SpriteFrames_axta8")
 animation = &"Idle"
 frame_progress = 0.474908
 
-[node name="AreaDeath" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaDeath"]
-shape = SubResource("CircleShape2D_kysft")
-
 [node name="AreaDetect" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaDetect"]
 shape = SubResource("CircleShape2D_u4b3o")
 
-[connection signal="body_entered" from="AreaDeath" to="." method="_on_area_death_body_entered"]
 [connection signal="body_entered" from="AreaDetect" to="." method="_on_area_detect_body_entered"]
 [connection signal="body_exited" from="AreaDetect" to="." method="_on_area_detect_body_exited"]

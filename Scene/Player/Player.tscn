@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://tcgtvrk8s7w"]
+[gd_scene load_steps=31 format=3 uid="uid://tcgtvrk8s7w"]
 
 [ext_resource type="Texture2D" uid="uid://ct7w5o8p110s7" path="res://Asset/Sunny-land-forest-files/PNG/sprites/player/player-idle/player-idle-1.png" id="1_odivs"]
 [ext_resource type="Script" path="res://Script/Player/Player.gd" id="1_uo50c"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://6alp3ehffd3b" path="res://Asset/Sunny-land-forest-files/PNG/sprites/player/player-skip/player-skip-8.png" id="21_0m34n"]
 [ext_resource type="Texture2D" uid="uid://cbbtctjrfon1i" path="res://Asset/Sunny-land-forest-files/PNG/environment/layers/background.png" id="23_qaoxm"]
 [ext_resource type="Texture2D" uid="uid://dr4cbuxwhv5m3" path="res://Asset/Sunny-land-forest-files/PNG/environment/layers/middleground.png" id="24_aakn6"]
+[ext_resource type="Script" path="res://Script/Buttons/BackHome.gd" id="27_jww4i"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lwrgq"]
 
@@ -121,8 +122,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8naeq"]
-size = Vector2(20, 26)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7lw43"]
+size = Vector2(23, 32)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_uo50c")
@@ -133,6 +134,7 @@ shape = SubResource("CapsuleShape2D_lwrgq")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_w6lh1")
 animation = &"Idle"
+frame_progress = 0.186224
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-2, -13)
@@ -161,13 +163,33 @@ texture = ExtResource("24_aakn6")
 [node name="Middleground2" type="Sprite2D" parent="BackgroundContainer"]
 z_index = -2000
 position = Vector2(244, -1.99999)
-scale = Vector2(1.10938, 1.94167)
+scale = Vector2(1.111, 1.942)
 texture = ExtResource("24_aakn6")
 
 [node name="Area2D" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, 3)
-shape = SubResource("RectangleShape2D_8naeq")
+[node name="Collision_Enemy" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.5, 2)
+shape = SubResource("RectangleShape2D_7lw43")
+
+[node name="labelWorld1" type="Label" parent="."]
+offset_left = -222.0
+offset_top = -138.0
+offset_right = 199.0
+offset_bottom = -77.0
+scale = Vector2(1.0429, 1)
+text = "World 1"
+autowrap_mode = 3
+uppercase = true
+
+[node name="btnBack" type="Button" parent="."]
+offset_left = 146.0
+offset_top = -138.0
+offset_right = 250.0
+offset_bottom = -107.0
+scale = Vector2(0.719999, 1)
+text = "BACK"
+script = ExtResource("27_jww4i")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="pressed" from="btnBack" to="btnBack" method="_on_pressed"]

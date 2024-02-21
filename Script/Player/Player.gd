@@ -8,11 +8,10 @@ const JUMP_VELOCITY = -400.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var flag
+var flag = false
 
-func _process(_delta):
-		if flag:
-			anim.play("Death");
+#func _process(_delta):
+		#return;
 			
 func _physics_process(delta):
 	# Add the gravity.
@@ -34,11 +33,26 @@ func _physics_process(delta):
 	else:
 		anim.play("Idle");
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-	move_and_slide()
-
-
+	
+	if flag:
+		anim.play("Death")
+		flag = false
+		death()
+		return
+		
+	move_and_slide()	
+	pass
+	
+# Player death when collision Enemy			
+func death():	
+	await get_tree().create_timer(1.5).timeout
+	reload()
+	
+# Handle collision enemy	
 func _on_area_2d_body_entered(body):
 	if body.name == "Bee":
-		print("Bee")
 		flag = true
 	pass # Replace with function body.
+
+func reload():
+	get_tree().change_scene_to_file("res://Scene/Worlds/World_1.tscn")

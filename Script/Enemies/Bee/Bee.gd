@@ -16,9 +16,7 @@ func _ready():
 	pass
 
 func _process(_delta):	
-		if flag_player_death:	
-			await get_tree().create_timer(1.0).timeout
-			reload()
+	return;
 			
 func _physics_process(_delta):
 	# Cách detect player 1:
@@ -46,22 +44,26 @@ func _physics_process(_delta):
 	elif position.x < player.position.x:
 		anim.scale.x = -1;	
 		
-	
 	move_and_slide() # kết thúc hàm có hàm này để sprite di chuyển	
-
+	
+	# Handle collision Player	
+	#if flag_player_death:	
+		#await get_tree().create_timer(2.0).timeout
+		#reload()	
+	
 # death erea
 func _on_area_death_body_entered(body):
 	if body.name == "Player":
 		flag_player_death = true
 	pass # Replace with function body.
 
-# detec
+# detect
 func _on_area_detect_body_entered(body):
 	if body.name == "Player":
 		flag_detect_player = true;
 	pass # Replace with function body.
 
-# detec
+# detect
 func _on_area_detect_body_exited(body):
 	if body.name == "Player":
 		flag_detect_player = false;
